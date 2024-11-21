@@ -1,4 +1,4 @@
-package com.khana.delivery.khana_delivery
+package com.khana.de
 
 import io.flutter.embedding.android.FlutterActivity
 

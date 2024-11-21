@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "326227744653",
+    "project_id": "khanadelivery-9710b",
+    "storage_bucket": "khanadelivery-9710b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:326227744653:android:52ead67c2db8fd42858fc4",
+        "android_client_info": {
+          "package_name": "com.khana.de"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCGB28kElTMdsSja4p_1-Tto533SEusk5Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
