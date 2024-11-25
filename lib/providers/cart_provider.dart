@@ -14,6 +14,17 @@ class   CartProvider with ChangeNotifier{
   List<CartModal> get allCartItems => _allCartItems;
   List<CartModal> _allCartItems = [];
 
+  double getCartTotalAmount(){
+    double total = 0;
+    allCartItems.forEach((allCartItem){
+
+      total = total + (allCartItem.quantity ?? 0) * double.parse(allCartItem.product?.price ?? "0");
+
+    });
+
+    return total;
+  }
+
   CartModal? getCartModal(int productId){
 
     for(var cart in allCartItems){

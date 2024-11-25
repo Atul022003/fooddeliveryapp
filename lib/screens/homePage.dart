@@ -209,7 +209,7 @@ Widget ProductWidget( Product product,BuildContext context) {
               Text( product.price ??" ", style: TextStyle(fontWeight: FontWeight.bold)),
               SizedBox(height: 10),
               Text(
-                product.name ??  " ",
+                product.description ??  " ",
                 style: TextStyle(color: Colors.grey[800]),
               ),
               SizedBox(height: 5),
@@ -319,4 +319,108 @@ Widget listTile({ required String title, required IconData icon, required Null F
           color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16),
     ),
   );
+}
+Widget CartWidget( Product product,BuildContext context) {
+
+  final wishListProvider = Provider.of<WishlistProvider>(context,listen: false);
+  final cartProvider = Provider.of<CartProvider>(context,listen: false);
+  final cartModal = cartProvider.getCartModal(product.productId ?? 0);
+
+  final totalAmount = double.parse(product.price ?? "0") * (cartModal?.quantity ?? 0);
+
+  return InkWell(child: Padding(
+    padding: EdgeInsets.only(top: 20, left: 20, right: 20),
+    child: Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Column for text details
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                product.name ??" ",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black),
+              ),
+              SizedBox(height: 5),
+              Text("₹ ${product.price ??" "}", style: TextStyle()),
+              SizedBox(height: 10),
+              Text(
+                "${cartModal?.quantity} qty x (${product.price}) = ₹ $totalAmount",
+                style: TextStyle(fontWeight: FontWeight.bold,
+                fontSize: 16),
+              ),
+              SizedBox(height: 5),
+
+
+            ],
+          ),
+        ),
+        SizedBox(width: 20,),
+        Stack(
+          alignment: Alignment.center,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 10), // Add space between text and image
+              child:ClipRRect(borderRadius: BorderRadius.circular(10),child:  Image.network(
+                product.imageUrl ?? "", // Update this with your image path
+                width: 90, // Set the width of the image
+                height: 90, // Set the height of the image
+                fit: BoxFit.cover, // Adjusts the image size
+              ),
+              ),
+
+            ),
+            Positioned(
+                bottom: 2,
+                child: cartModal == null ? ElevatedButton.icon(
+                  onPressed: (){
+
+                    cartProvider.addToCart(product.productId ?? 0,FirebaseAuth.instance.currentUser?.uid ?? "");
+
+                  },
+                  icon: Icon(Icons.add, color: Colors.black),
+                  label: Text("Add"),
+
+
+
+                ) : Container(height:40,
+
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(topLeft: Radius.circular(14),topRight: Radius.circular(14),
+                          bottomLeft: Radius.circular(12),bottomRight: Radius.circular(12))
+
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      InkWell(onTap: (){
+                        cartProvider.removeFromCart(product.productId ?? 0,FirebaseAuth.instance.currentUser?.uid ?? "");
+                      },
+                        child:  Padding(child: Icon(Icons.remove,color: Colors.black,),padding: EdgeInsets.all(10),),
+                      ),
+                      Text("${cartModal.quantity}",style: TextStyle(fontWeight: FontWeight.bold),),
+                      InkWell(onTap: (){
+                        cartProvider.addToCart(product.productId ?? 0,FirebaseAuth.instance.currentUser?.uid ?? "");
+                      },
+                        child:  Padding(child: Icon(Icons.add,color: Colors.black,),padding: EdgeInsets.all(10),),
+                      ),
+
+                    ],
+
+                  ),
+                )),
+          ],
+
+        ),
+        // Image on the right side
+
+      ],
+    ),
+  ),onTap: (){
+    Navigator.push(context,MaterialPageRoute(builder: (context) => ProductOverView(product)));
+
+
+  },);
 }

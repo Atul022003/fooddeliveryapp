@@ -2,6 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:provider/provider.dart';
+
+import '../providers/address_provider.dart';
 
 class AddAddressPage extends StatefulWidget {
   @override
@@ -57,17 +60,26 @@ class AddAddressPageState extends State<AddAddressPage> {
 
   // *** Change: _addMarker moved to the class level ***
 
-  Future<void>_saveAddress() async{
+  Future<void>_saveAddress() async {
+
+    final provider = Provider.of<AddressProvider>(context ,listen: false);
+
     final address = _addressController.text.trim();
     final landmark = _landmarkController.text.trim();
-    if( address.isEmpty || _initialPosition == null){
+    final lat =  _userLocationMoved?.target.latitude ?? 0;
+    final longi =  _userLocationMoved?.target.longitude ?? 0;
+
+    if(address.isEmpty || _initialPosition == null){
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Write proper address")));
       return;
     }
 
-    _userLocationMoved?.target.latitude;
-    _userLocationMoved?.target.longitude;
+    if(lat == 0 || longi == 0){
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Select a valid location on map")));
+      return;
+    }
 
+    provider.saveAddress(address, landmark, lat,longi);
 
 
 }
@@ -137,6 +149,7 @@ void moveToOriginalLocation(){
             ),
             SizedBox(height: 20),
             TextField(
+              controller: _addressController,
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
                 hintText: "Address",
@@ -144,6 +157,7 @@ void moveToOriginalLocation(){
             ),
             SizedBox(height: 10),
             TextField(
+              controller: _landmarkController,
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
                 hintText: "Landmark",
@@ -152,15 +166,20 @@ void moveToOriginalLocation(){
             SizedBox(height: 10),
             Align(
               alignment: Alignment.center,
-              child: ElevatedButton(
-                onPressed: (
-                  //  _saveAddress,
-                    ) {
-                  // Implement save functionality here
+              child: InkWell(
+                onTap: (){
+                  _saveAddress();
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Address will be saved")));
+                  Navigator.pop(context);
                 },
-                child: Text("Save Address"),
-              ),
+                child: Text("Save Address",style:TextStyle(color: Colors.grey),),
+
+
+              )
+
             ),
+
+
           ],
         ),
       ),

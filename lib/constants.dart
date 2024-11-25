@@ -1,6 +1,6 @@
 
 class Constants {
-  static const baseUrl = "http://192.168.1.11:3000/";
+  static const baseUrl = "http://192.168.1.8:3000/";
 
   //apis
   static const allProductsAPI = "api/products";
@@ -10,5 +10,7 @@ class Constants {
   static const getCartApi = "api/cart/";
   static const getWishlistApi = "api/wishlist/";
   static const getCategoryItemsApi ="api/products/category";
-  static const getAddressApi="/api/addresses/";
+  static const getAddressApi="api/addresses/";
+  static const updateAddressApi ="api/addresses/";
+  static const deleteAddressApi = "api/addresses/";
 }
