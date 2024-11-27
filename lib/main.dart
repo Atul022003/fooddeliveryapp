@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:khana_delivery/providers/address_provider.dart';
 import 'package:khana_delivery/providers/auth_provider.dart';
 import 'package:khana_delivery/providers/cart_provider.dart';
+import 'package:khana_delivery/providers/order_provider.dart';
 import 'package:khana_delivery/providers/wishlist_provider.dart';
 import 'package:khana_delivery/screens/homePage.dart';
 import 'package:khana_delivery/providers/product_provider.dart';
@@ -36,7 +37,9 @@ class MyApp extends StatelessWidget {
       ChangeNotifierProvider<WishlistProvider>(
         create: (context)=>WishlistProvider(),),
       ChangeNotifierProvider<AddressProvider>(
-        create: (context)=>AddressProvider(),)
+        create: (context)=>AddressProvider(),),
+      ChangeNotifierProvider<OrderProvider>(
+        create: (context)=>OrderProvider(),)
     ],child: MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',

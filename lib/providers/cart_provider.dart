@@ -6,13 +6,28 @@ import 'package:khana_delivery/constants.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import 'package:khana_delivery/models/cart_modal.dart'; // For json decoding
+import 'package:khana_delivery/models/cart_modal.dart';
+import 'package:khana_delivery/models/product_modal.dart'; // For json decoding
 
 class   CartProvider with ChangeNotifier{
 
 
   List<CartModal> get allCartItems => _allCartItems;
   List<CartModal> _allCartItems = [];
+
+  List<Product> getPlaceOrderProducts(){
+    List<Product> listOfProducts = [];
+
+    allCartItems.forEach((cartItem){
+
+      final product = cartItem.product;
+      product?.quantity = cartItem.quantity;
+      listOfProducts.add(product!);
+
+    });
+
+    return listOfProducts;
+  }
 
   double getCartTotalAmount(){
     double total = 0;
@@ -95,5 +110,20 @@ class   CartProvider with ChangeNotifier{
       return false;
     }
 
+  }
+
+  Future<bool>clearCart() async{
+    final userId = FirebaseAuth.instance.currentUser?.uid ?? "";
+    final url = "${Constants.baseUrl}${Constants.cartApi}$userId";
+    final response = await http.delete(Uri.parse(url),
+      headers: { "Content-Type": "Application/json"},);
+
+    if (response.statusCode==200){
+      refreshCart();
+      return true;
+    }
+    else{
+      return false;
+    }
   }
  }

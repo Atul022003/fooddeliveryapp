@@ -15,6 +15,7 @@ import 'package:khana_delivery/screens/address_page.dart';
 import 'package:khana_delivery/screens/all_categories_product.dart';
 import 'package:khana_delivery/screens/cart_review.dart';
 import 'package:khana_delivery/screens/categorie_product.dart';
+import 'package:khana_delivery/screens/my_orders.dart';
 import 'package:khana_delivery/screens/product_overview.dart';
 import 'package:khana_delivery/screens/profile_page.dart';
 import 'package:khana_delivery/screens/profile_pagee.dart';
@@ -31,7 +32,7 @@ class HomePage extends StatefulWidget{
 class HomePageState extends State<HomePage>{
 
   int _menuIndex = 0;
-  List<String> _titles = ["Home","Profile","Address","Review Cart","Wishlist","Notifications","Rating & Review","Complaint","FAQs"];
+  List<String> _titles = ["Home","Profile","Address","Review Cart","My Orders","Wishlist","Notifications","Rating & Review","Complaint","FAQs"];
 
   @override
   void initState() {
@@ -81,20 +82,23 @@ class HomePageState extends State<HomePage>{
               listTile(icon:Icons.shop_outlined ,title:"Review Cart",onTap: (){
                 changeMenu(3);
               }),
-              listTile(icon:Icons.favorite_outline, title: "Wishlist",onTap: (){
+              listTile(icon:Icons.shopping_bag, title: "My Orders",onTap: (){
                 changeMenu(4);
               }),
-              listTile(icon:Icons.notifications_outlined, title: "Notiffication",onTap: (){
+              listTile(icon:Icons.favorite_outline, title: "Wishlist",onTap: (){
                 changeMenu(5);
               }),
-              listTile(icon:Icons.star_outline, title: "Rating & Review",onTap: (){
+              listTile(icon:Icons.notifications_outlined, title: "Notiffication",onTap: (){
                 changeMenu(6);
               }),
-              listTile(icon:Icons.copy_outlined, title: "Raise a Complaint ",onTap: (){
+              listTile(icon:Icons.star_outline, title: "Rating & Review",onTap: (){
                 changeMenu(7);
               }),
-              listTile(icon:Icons.format_quote_outlined, title: "FaQs",onTap: (){
+              listTile(icon:Icons.copy_outlined, title: "Raise a Complaint ",onTap: (){
                 changeMenu(8);
+              }),
+              listTile(icon:Icons.format_quote_outlined, title: "FaQs",onTap: (){
+                changeMenu(9);
               }),
               SizedBox(height: 30,),
               Row(
@@ -149,6 +153,8 @@ class HomePageState extends State<HomePage>{
       return CartReview();
     }
     else if(_menuIndex == 4){
+      return MyOrders();  }
+    else if(_menuIndex == 5){
       return WishListPage();  }
 
     else {

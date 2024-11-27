@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:khana_delivery/models/cart_modal.dart';
 import 'package:khana_delivery/models/product_modal.dart';
 import 'package:khana_delivery/providers/cart_provider.dart';
+import 'package:khana_delivery/providers/order_provider.dart';
 import 'package:khana_delivery/screens/homePage.dart';
 import 'package:provider/provider.dart';
 
@@ -24,10 +25,20 @@ class CartReviewState extends State<CartReview>{
     provider.getAllAddress();
     super.initState();
   }
+
+  void placeOrder(){
+    final provider = Provider.of<OrderProvider>(context,listen: false);
+    provider.placeOrder(context);
+
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Order Placed!!")));
+    //Navigator.pop(context);
+  }
+
   @override
   Widget build (BuildContext context) {
 
     final provider = Provider.of<AddressProvider>(context);
+    final orderProvider = Provider.of<OrderProvider>(context);
     CartProvider cartProvider = Provider.of(context);
 
 
@@ -49,7 +60,11 @@ class CartReviewState extends State<CartReview>{
 
 
            ],),
-           ElevatedButton(onPressed: (){}, child: Text("Place Order"))
+           orderProvider.isLoading ? CircularProgressIndicator() :
+           ElevatedButton(onPressed: (){
+             placeOrder();
+
+           }, child: Text("Place Order"))
 
          ],),),) : SizedBox(),
      body: cartProvider.allCartItems.isEmpty ? Center(child:
