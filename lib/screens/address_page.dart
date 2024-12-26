@@ -28,9 +28,7 @@ class AddressPageState extends State<AddressPage>{
   Widget build(BuildContext context) {
     final addressProvider = Provider.of<AddressProvider>(context);
     return Scaffold(
-      appBar: AppBar(
-        title: Text(""),
-      ),
+
 
       body: Stack(children: [
 

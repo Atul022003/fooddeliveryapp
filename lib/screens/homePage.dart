@@ -36,6 +36,8 @@ class HomePageState extends State<HomePage>{
 
   @override
   void initState() {
+
+    LocalNotificationService.initialize();
     final provider = Provider.of<ProductProvider>(context,listen: false);
     final cartProvider = Provider.of<CartProvider>(context,listen: false);
     final wishlistProvider = Provider.of<WishlistProvider>(context,listen: false);

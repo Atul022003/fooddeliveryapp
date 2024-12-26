@@ -70,6 +70,24 @@ class OrderDetailpageState extends State<OrderDetailpage>{
                 children: widget.order.products?.map((product)=>OrderDetailwiget(product,context)).toList() ?? List.empty(),
               )
             ],),
+          ),
+          SizedBox(height: 20,),
+          Container(
+            padding: const EdgeInsets.all(10),
+            width: double.infinity,
+            decoration: getCardDecoration(),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+
+                Text("Total amount",style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold),),
+                SizedBox( height: 15,),
+                Column(
+                  children: [
+                    Text(" Rs ${widget.order.totalAmount}",style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold),)
+                  ],
+                )
+              ],),
           )
         ],
 

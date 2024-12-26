@@ -91,9 +91,7 @@ void moveToOriginalLocation(){
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Add Address"),
-      ),
+
       body: Padding(
         padding: EdgeInsets.all(20),
         child: Column(
